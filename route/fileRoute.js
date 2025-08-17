@@ -6,7 +6,18 @@ import {
   uploadFile,
 } from "../controllers/fileController.js";
 const fileRouter = e.Router();
-fileRouter.post("/upload", upload.single("file"), uploadFile);
+fileRouter.post(
+  "/upload",
+  (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err) {
+        return res.render("index", { error: err.message });
+      }
+      next();
+    });
+  },
+  uploadFile
+);
 fileRouter.get("/download/:id", downloadUnprotectedFile);
 fileRouter.post("/download/:id", downloadProtectedFile);
 export default fileRouter;

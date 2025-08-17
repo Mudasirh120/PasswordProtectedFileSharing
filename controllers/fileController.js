@@ -22,7 +22,14 @@ export const uploadFile = async (req, res) => {
 export const downloadUnprotectedFile = async (req, res) => {
   const findFile = await File.findById(req.params.id);
   if (!findFile) {
-    return res.status(404).send("File not found");
+    return res
+      .status(404)
+      .render("errorfile", { errorCode: 404, errorMessage: "File not found" });
+  }
+  if (findFile.expiresAt <= Date.now()) {
+    res
+      .status(400)
+      .render("errorfile", { errorCode: 400, errorMessage: "File expired" });
   }
   if (findFile.password) {
     res.render("password", { id: findFile._id });
@@ -35,7 +42,14 @@ export const downloadUnprotectedFile = async (req, res) => {
 export const downloadProtectedFile = async (req, res) => {
   const findFile = await File.findById(req.params.id);
   if (!findFile) {
-    return res.status(404).send("File not found");
+    res
+      .status(404)
+      .render("errorfile", { errorCode: 404, errorMessage: "File Not Found" });
+  }
+  if (findFile.expiresAt <= Date.now()) {
+    res
+      .status(400)
+      .render("errorfile", { errorCode: 400, errorMessage: "File Expired" });
   }
   const match = await comparePassword(req.body.password, findFile.password);
   if (!match) {

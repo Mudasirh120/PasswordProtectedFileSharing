@@ -9,9 +9,15 @@
   <body>
     <div class="items-center">
       <% if(locals.fileLink != null) { %>
-      <div class="container success-box">
+      <div class="container success-box inline">
         Your file is uploaded successfully!
-        <a href="<%= locals.fileLink %>">Download Link</a>
+        <a href="<%= locals.fileLink %>">Download Link</a
+        ><img
+          src="/copy.svg"
+          class="copy"
+          alt="copy"
+          aria-valuetext="<%= locals.fileLink %>"
+        />
       </div>
       <% }%>
       <div class="container">
@@ -29,6 +35,27 @@
           <button type="submit">Share</button>
         </form>
       </div>
+      <div class="inline between">
+        <div class="inline">
+          <p>Allowed Files :</p>
+          <span class="inline">
+            <p class="allowed-values">PNG</p>
+            <p class="allowed-values">JPG</p>
+            <p class="allowed-values">PDF</p>
+            <p class="allowed-values">TXT</p>
+          </span>
+        </div>
+        <div class="inline">
+          <p>Size :</p>
+          <p class="allowed-values">10MB</p>
+        </div>
+      </div>
+      <% if(locals.error != null) { %>
+      <p class="error"><%= locals.error %></p>
+      <% } %> <% if(locals.error == null) { %>
+      <p class="error">Link will automatically expire in 30 minutes.</p>
+      <% } %>
     </div>
+    <script src="/copy.js"></script>
   </body>
 </html>

@@ -79,8 +79,27 @@ button:hover {
   text-align: center;
   font-weight: 500;
 }
+.error {
+  color: #842029;
+}
 .items-center {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.between {
+  gap: 100px;
+}
+.allowed-values {
+  color: #155724;
+  font-size: 12px;
+}
+.copy {
+  filter: invert(1);
+  margin-left: 4px;
 }

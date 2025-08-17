@@ -6,7 +6,7 @@ const fileSchema = new mongoose.Schema(
     size: { type: Number, required: true },
     password: String,
     downloadCount: { type: Number, default: 0 },
-    expiresAt: { type: Date, default: Date.now() + 24 * 60 * 60 * 1000 },
+    expiresAt: { type: Date, default: Date.now() + 30 * 60 * 1000 },
   },
   { timestamps: true }
 );
