@@ -11,7 +11,7 @@ fileRouter.post(
   (req, res, next) => {
     upload.single("file")(req, res, (err) => {
       if (err) {
-        return res.render("index", { error: err.message });
+        return res.render("index", { error: err.message, fileLink: null });
       }
       next();
     });

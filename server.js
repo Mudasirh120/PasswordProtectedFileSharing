@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 import fileRouter from "./route/fileRoute.js";
 import connectCloudinary from "./config/cloudinaryConfig.js";
 import cron from "./util/cron.js";
+import { error } from "console";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +19,7 @@ app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/file", fileRouter);
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { fileLink: null, error: null });
 });
 connectDb();
 connectCloudinary();

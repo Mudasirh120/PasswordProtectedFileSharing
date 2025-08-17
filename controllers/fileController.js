@@ -2,6 +2,7 @@ import { hashPassword, comparePassword } from "../util/bcrypt.js";
 import { File } from "../model/FileModel.js";
 import { cloudinaryUpload } from "../util/cloudinary.js";
 import axios from "axios";
+import { error } from "console";
 export const uploadFile = async (req, res) => {
   try {
     const cloudinaryRes = await cloudinaryUpload(
@@ -21,6 +22,7 @@ export const uploadFile = async (req, res) => {
     await file.save();
     res.render("index", {
       fileLink: `${req.headers.origin}/file/download/${file.id}`,
+      error: null,
     });
   } catch (error) {
     console.log(error);
