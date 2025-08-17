@@ -1,0 +1,13 @@
+import mongoose from "mongoose";
+const fileSchema = new mongoose.Schema(
+  {
+    path: { type: String, required: true },
+    originalName: { type: String, required: true },
+    size: { type: Number, required: true },
+    password: String,
+    downloadCount: { type: Number, default: 0 },
+    expiresAt: { type: Date, default: Date.now() + 24 * 60 * 60 * 1000 },
+  },
+  { timestamps: true }
+);
+export const File = mongoose.model("File", fileSchema);

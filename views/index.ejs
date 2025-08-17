@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Password Protected File Sharing</title>
+  </head>
+  <body>
+    <div class="items-center">
+      <% if(locals.fileLink != null) { %>
+      <div class="container success-box">
+        Your file is uploaded successfully!
+        <a href="<%= locals.fileLink %>">Download Link</a>
+      </div>
+      <% }%>
+      <div class="container">
+        <h1>Password Protected File Sharing</h1>
+        <form action="/file/upload" method="POST" enctype="multipart/form-data">
+          <label for="file">Choose a File</label>
+          <input type="file" id="file" name="file" required />
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter a password"
+          />
+          <button type="submit">Share</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
