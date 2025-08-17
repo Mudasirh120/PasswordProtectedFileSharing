@@ -43,8 +43,6 @@ export const downloadUnprotectedFile = async (req, res) => {
     res.render("password", { id: findFile._id });
     return;
   }
-  findFile.downloadCount++;
-  await findFile.save();
   await downloadFile(res, findFile);
   res.render("index", { fileLink: null, errorMsg: null });
   // res.download(findFile.path, findFile.originalName);
@@ -66,22 +64,24 @@ export const downloadProtectedFile = async (req, res) => {
     res.render("password", { error: true, id: findFile.id });
     return;
   }
-  findFile.downloadCount++;
-  await findFile.save();
   await downloadFile(res, findFile);
   // res.download(findFile.path, findFile.originalName);
   res.render("index", { fileLink: null, errorMsg: null });
 };
 
 const downloadFile = async (res, file) => {
-  const response = await axios({
-    url: file.path,
-    method: "GET",
-    responseType: "stream",
-  });
-  res.setHeader(
-    "Content-Disposition",
-    `attachment; filename="${file.originalName}"`
-  );
-  response.data.pipe(res);
+  try {
+    const response = await axios({
+      url: file.path,
+      method: "GET",
+      responseType: "stream",
+    });
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${file.originalName}"`
+    );
+    response.data.pipe(res);
+  } catch (error) {
+    console.log(error);
+  }
 };
