@@ -1,5 +1,5 @@
 import { hashPassword, comparePassword } from "../util/bcrypt.js";
-import { File } from "../model/File.js";
+import { File } from "../model/FileModel.js";
 export const uploadFile = async (req, res) => {
   try {
     const fileData = {

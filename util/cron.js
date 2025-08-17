@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import fs from "fs";
 import path from "path";
-import { File } from "../model/File.js";
+import { File } from "../model/FileModel.js";
 cron.schedule("0 * * * *", async () => {
   console.log("Checking for expired files...");
   try {
