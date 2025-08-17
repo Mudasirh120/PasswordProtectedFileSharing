@@ -49,7 +49,7 @@ git clone https://github.com/Mudasirh120/PasswordProtectedFileSharing.git
 npm install
 ```
 
-3. Create a `.env` file and add your MongoDB URI:
+3. Create a `.env` file and add these variables:
 
 ```
 MONGODB_URL=your_mongodb_connection_string
