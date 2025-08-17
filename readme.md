@@ -12,7 +12,7 @@
 - 10 mb size limit is set per file
 - Only png,jpeg,pdf and txt files are allowed
 - Files expire after 30 min and are unaccessible
-- Expired files are cleaned once every hour
+- Expired files are cleaned whenever someone visits site and through a external cron scheduled ping every midnight.
 - clean and minimal interface
 - Deployed online for live access
 
@@ -31,7 +31,7 @@
 - bcrypt for hashing password before saving to database
 - multer to get & store files on server temperairly
 - cloudinary to store files
-- node-cron to delete expired files from database and cloudinary once every hour (expired files are unaccessible)
+- node-cron to delete expired files from database and cloudinary once every hour (not working, because project is deployed on vercel) replaced with a cleanup whenever someone visits site and through an external cron ping from cron-job.org.
 
 ---
 
