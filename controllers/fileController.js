@@ -1,11 +1,18 @@
 import { hashPassword, comparePassword } from "../util/bcrypt.js";
 import { File } from "../model/FileModel.js";
+import { cloudinaryUpload } from "../util/cloudinary.js";
+import axios from "axios";
 export const uploadFile = async (req, res) => {
   try {
+    const cloudinaryRes = await cloudinaryUpload(
+      req.file.path,
+      req.file.mimetype.split("/")[0]
+    );
     const fileData = {
-      path: req.file.path,
+      path: cloudinaryRes.url,
       originalName: req.file.originalname,
       size: req.file.size,
+      publicId: cloudinaryRes.publicId,
     };
     if (req.body.password != null && req.body.password !== "") {
       fileData.password = await hashPassword(req.body.password);
@@ -37,7 +44,8 @@ export const downloadUnprotectedFile = async (req, res) => {
   }
   findFile.downloadCount++;
   await findFile.save();
-  res.download(findFile.path, findFile.originalName);
+  await downloadFile(res, findFile);
+  // res.download(findFile.path, findFile.originalName);
 };
 export const downloadProtectedFile = async (req, res) => {
   const findFile = await File.findById(req.params.id);
@@ -58,5 +66,19 @@ export const downloadProtectedFile = async (req, res) => {
   }
   findFile.downloadCount++;
   await findFile.save();
-  res.download(findFile.path, findFile.originalName);
+  await downloadFile(res, findFile);
+  // res.download(findFile.path, findFile.originalName);
+};
+
+const downloadFile = async (res, file) => {
+  const response = await axios({
+    url: file.path,
+    method: "GET",
+    responseType: "stream",
+  });
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${file.originalName}"`
+  );
+  response.data.pipe(res);
 };

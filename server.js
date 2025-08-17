@@ -7,7 +7,8 @@ import { connectDb } from "./config/db.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import fileRouter from "./route/fileRoute.js";
-import cron from "./util/cron.js";
+import connectCloudinary from "./config/cloudinaryConfig.js";
+// import cron from "./util/cron.js";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,4 +20,5 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 connectDb();
+connectCloudinary();
 export default app;

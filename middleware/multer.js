@@ -1,13 +1,11 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-const Dir = "uploads";
-if (!fs.existsSync(Dir)) {
-  fs.mkdirSync(Dir);
-}
+const Dir = "/tmp/uploads";
+fs.mkdirSync(Dir, { recursive: true });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, "/tmp/uploads");
   },
   filename: (req, file, cb) => {
     const fileExtension = path.extname(file.originalname);
@@ -30,5 +28,4 @@ const upload = multer({
     cb(null, true);
   },
 });
-// const upload = multer({ storage: storage });
 export default upload;
