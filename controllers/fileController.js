@@ -2,7 +2,6 @@ import { hashPassword, comparePassword } from "../util/bcrypt.js";
 import { File } from "../model/FileModel.js";
 import { cloudinaryUpload } from "../util/cloudinary.js";
 import axios from "axios";
-import { error } from "console";
 export const uploadFile = async (req, res) => {
   try {
     const cloudinaryRes = await cloudinaryUpload(
@@ -22,7 +21,7 @@ export const uploadFile = async (req, res) => {
     await file.save();
     res.render("index", {
       fileLink: `${req.headers.origin}/file/download/${file.id}`,
-      error: null,
+      errorMsg: null,
     });
   } catch (error) {
     console.log(error);
@@ -47,6 +46,7 @@ export const downloadUnprotectedFile = async (req, res) => {
   findFile.downloadCount++;
   await findFile.save();
   await downloadFile(res, findFile);
+  res.render("index", { fileLink: null, errorMsg: null });
   // res.download(findFile.path, findFile.originalName);
 };
 export const downloadProtectedFile = async (req, res) => {
@@ -70,6 +70,7 @@ export const downloadProtectedFile = async (req, res) => {
   await findFile.save();
   await downloadFile(res, findFile);
   // res.download(findFile.path, findFile.originalName);
+  res.render("index", { fileLink: null, errorMsg: null });
 };
 
 const downloadFile = async (res, file) => {

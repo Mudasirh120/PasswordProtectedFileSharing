@@ -1,5 +1,5 @@
 const copy = document.querySelector(".copy");
-copy.addEventListener("click", async () => {
+copy?.addEventListener("click", async () => {
   try {
     const url = `${copy.getAttribute("aria-valuetext")}`;
     await navigator.clipboard.writeText(url);

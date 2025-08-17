@@ -50,9 +50,9 @@
           <p class="allowed-values">10MB</p>
         </div>
       </div>
-      <% if(locals.error != null) { %>
-      <p class="error"><%= locals.error %></p>
-      <% } %> <% if(locals.error == null) { %>
+      <% if(locals.errorMsg != null) { %>
+      <p class="error"><%= locals.errorMsg %></p>
+      <% } %> <% if(locals.errorMsg == null) { %>
       <p class="error">Link will automatically expire in 30 minutes.</p>
       <% } %>
     </div>
